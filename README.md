@@ -3,7 +3,7 @@
 ## Introduction
 This project is a little Java Spring API REST application that has one endpoint to obtain the price to apply for a product of a specific brand at a particular day and time.
 
-Is developed using Java 17, Spring 2.7.3 and Gradle 7.4, along with other technologies for unit testing and API documentation.
+Is developed using Java 17, Spring 2.7.3 and Gradle, along with other technologies for unit testing and API documentation.
 
 - All dates use the <b>yyyy-MM-dd'T'HH:mm:ss</b> format. </n>
 - Endpoint returns a json body.
@@ -15,7 +15,6 @@ Is developed using Java 17, Spring 2.7.3 and Gradle 7.4, along with other techno
 - I used a controller advice, custom exception and an ErrorDTO to handle better the exceptions and, in the case of the NoSuchElementException, to return a specific message to the user.
 - I filter and find the price to apply directly in the jpa query for better performance, avoiding using and iterating lists.
 - I used native query for the repository because I found it worked better and had better readability, and with that maintenance, than not using the query annotation or using a JPA query (I couldn't find a way to get only the first result for the JPA query). Though with this I know I'm exposing the table structure and if another database type is to be used (MySQL, SQL Server, etc.) or the table or column names where changed, the query would have to be changed too, something that is avoid with the other options JPA gives.
-- Added a private constructor to the utility class Constants to hide the public one, as suggested by SonarLint since utility classes shouldn't have public constructors.
 
 ## Run application
 
