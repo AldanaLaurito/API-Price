@@ -1,5 +1,4 @@
-# Prices Api
-
+# API Price
 
 ## Introduction
 This project is a little Java Spring API REST application that has one endpoint to obtain the price to apply for a product of a specific brand at a particular day and time.
