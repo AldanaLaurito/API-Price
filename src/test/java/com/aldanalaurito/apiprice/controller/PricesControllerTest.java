@@ -2,11 +2,16 @@ package com.aldanalaurito.apiprice.controller;
 
 import com.aldanalaurito.apiprice.controller.advice.PricesControllerAdvice;
 import com.aldanalaurito.apiprice.controller.dto.ProductPriceResponseDTO;
+import com.aldanalaurito.apiprice.service.PriceService;
 import com.aldanalaurito.apiprice.service.PriceServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,22 +22,26 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(MockitoExtension.class)
 class PricesControllerTest {
 
-    PriceServiceImpl priceService = Mockito.mock(PriceServiceImpl.class);
+    @Mock
+    PriceService priceService;
 
-    PricesController pricesController = new PricesController(priceService);
+    @InjectMocks
+    PricesController pricesController;
 
     private MockMvc mockMvc;
 
     @BeforeEach
     void beforeEach(){
         mockMvc = MockMvcBuilders.standaloneSetup(pricesController).setControllerAdvice(new PricesControllerAdvice()).build();
-        when(priceService.obtainProductPriceByDateAndBrand(anyInt(), anyLong(), any())).thenReturn(new ProductPriceResponseDTO());
     }
 
     @Test
     void endpoint_obtainProductPriceByDateAndBrand_ok() throws Exception {
+        when(priceService.obtainProductPriceByDateAndBrand(anyInt(), anyLong(), any())).thenReturn(new ProductPriceResponseDTO());
+        
         MockHttpServletResponse response = mockMvc.perform(
                         get("/api/v1/prices/obtainPrice")
                                 .queryParam("brand", "1")

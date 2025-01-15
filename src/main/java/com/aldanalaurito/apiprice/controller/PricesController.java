@@ -3,6 +3,7 @@ package com.aldanalaurito.apiprice.controller;
 import com.aldanalaurito.apiprice.controller.dto.ErrorDTO;
 import com.aldanalaurito.apiprice.controller.dto.ProductPriceResponseDTO;
 import com.aldanalaurito.apiprice.helper.Constants;
+import com.aldanalaurito.apiprice.service.PriceService;
 import com.aldanalaurito.apiprice.service.PriceServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +22,10 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping(path = "/api/v1/prices")
 public class PricesController {
 
-    private final PriceServiceImpl priceService;
+    @Autowired
+    private final PriceService priceService;
 
-    public PricesController(PriceServiceImpl priceService) {
+    public PricesController(PriceService priceService) {
         this.priceService = priceService;
     }
 
