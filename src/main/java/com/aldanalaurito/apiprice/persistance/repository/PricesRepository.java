@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Repository
 public interface PricesRepository extends CrudRepository<PriceEntity, Long> {
@@ -17,6 +18,6 @@ public interface PricesRepository extends CrudRepository<PriceEntity, Long> {
             "END_DATE >= :dateTime " +
             "ORDER BY PRIORITY DESC LIMIT 1",
             nativeQuery = true)
-    PriceEntity findFirstByProductIdAndBrandIdAndDatetime(
+    Optional<PriceEntity> findFirstByProductIdAndBrandIdAndDatetime(
             Long productId, Integer brandId, LocalDateTime dateTime);
 }

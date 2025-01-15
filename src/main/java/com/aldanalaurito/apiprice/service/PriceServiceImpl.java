@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class PriceServiceImpl implements PriceService {
@@ -18,10 +19,9 @@ public class PriceServiceImpl implements PriceService {
 
     public ProductPriceResponseDTO obtainProductPriceByDateAndBrand(int brandId, long productId, LocalDateTime dateApplication){
 
-        PriceEntity priceEntity = pricesRepository.findFirstByProductIdAndBrandIdAndDatetime(productId, brandId, dateApplication);
+        Optional<PriceEntity> priceEntityOptional = pricesRepository.findFirstByProductIdAndBrandIdAndDatetime(productId, brandId, dateApplication);
 
-        if(priceEntity == null || priceEntity.getPriceList() == null) throw new PriceNotFoundException("No price list was found for the brand, product or date given.");
-
+        PriceEntity priceEntity = priceEntityOptional.orElseThrow(() -> new PriceNotFoundException("No price list was found for the brand, product or date given."));
         return new ObjectMapper().convertValue(priceEntity, ProductPriceResponseDTO.class);
     }
 }

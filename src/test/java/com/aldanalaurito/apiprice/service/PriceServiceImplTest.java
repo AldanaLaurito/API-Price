@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -39,7 +40,7 @@ class PriceServiceImplTest {
                 .endDate(LocalDateTime.parse("2020-12-31T23:59:59", formatter))
                 .priority(0).price(new BigDecimal("35.50")).curr("EUR").build();
 
-        when(repository.findFirstByProductIdAndBrandIdAndDatetime(anyLong(), anyInt(), any())).thenReturn(price);
+        when(repository.findFirstByProductIdAndBrandIdAndDatetime(anyLong(), anyInt(), any())).thenReturn(Optional.of(price));
 
         ProductPriceResponseDTO priceToApply = Assertions.assertDoesNotThrow(() -> service.obtainProductPriceByDateAndBrand(1,35455L, date));
         Assertions.assertNotNull(priceToApply);
@@ -48,20 +49,10 @@ class PriceServiceImplTest {
     }
 
     @Test
-    void obtainPriceList_error_no_element_found_database_returns_empty_element(){
-        LocalDateTime date = LocalDateTime.parse("2021-06-16T21:00:00", formatter);
-
-        when(repository.findFirstByProductIdAndBrandIdAndDatetime(anyLong(), anyInt(), any())).thenReturn(new PriceEntity());
-
-        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> service.obtainProductPriceByDateAndBrand(1,35455L, date));
-        Assertions.assertTrue(exception.getMessage().contains("No price list was found"));
-    }
-
-    @Test
     void obtainPriceList_error_no_element_found_database_returns_null(){
         LocalDateTime date = LocalDateTime.parse("2020-06-15T10:00:00", formatter);
 
-        when(repository.findFirstByProductIdAndBrandIdAndDatetime(anyLong(), anyInt(), any())).thenReturn(null);
+        when(repository.findFirstByProductIdAndBrandIdAndDatetime(anyLong(), anyInt(), any())).thenReturn(Optional.empty());
 
         RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> service.obtainProductPriceByDateAndBrand(1,35455L, date));
         Assertions.assertTrue(exception.getMessage().contains("No price list was found"));
