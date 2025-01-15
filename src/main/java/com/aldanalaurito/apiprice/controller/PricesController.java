@@ -4,7 +4,6 @@ import com.aldanalaurito.apiprice.controller.dto.ErrorDTO;
 import com.aldanalaurito.apiprice.controller.dto.ProductPriceResponseDTO;
 import com.aldanalaurito.apiprice.helper.Constants;
 import com.aldanalaurito.apiprice.service.PriceService;
-import com.aldanalaurito.apiprice.service.PriceServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -33,7 +32,7 @@ public class PricesController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Price", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ProductPriceResponseDTO.class), examples = @ExampleObject(name = "Price to apply", value = Constants.PRODUCT_PRICE_RESPONSE_DTO_EXAMPLE))}),
             @ApiResponse(responseCode = "409", description = "Conflict", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDTO.class), examples = @ExampleObject(name = "CONFLICT", value = Constants.ERROR_DTO))}),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDTO.class), examples = @ExampleObject(name = "CONFLICT", value = Constants.PRICE_NOT_FOUND_ERROR_DTO))}),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)})
     @GetMapping("/obtainPrice")

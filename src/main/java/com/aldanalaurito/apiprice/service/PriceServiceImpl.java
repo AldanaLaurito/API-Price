@@ -21,7 +21,7 @@ public class PriceServiceImpl implements PriceService {
 
         Optional<PriceEntity> priceEntityOptional = pricesRepository.findFirstByProductIdAndBrandIdAndDatetime(productId, brandId, dateApplication);
 
-        PriceEntity priceEntity = priceEntityOptional.orElseThrow(() -> new PriceNotFoundException("No price list was found for the brand, product or date given."));
+        PriceEntity priceEntity = priceEntityOptional.orElseThrow(PriceNotFoundException::new);
         return new ObjectMapper().convertValue(priceEntity, ProductPriceResponseDTO.class);
     }
 }
