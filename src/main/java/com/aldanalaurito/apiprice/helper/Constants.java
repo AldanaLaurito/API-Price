@@ -6,5 +6,5 @@ public class Constants {
 
     public static final String PRODUCT_PRICE_RESPONSE_DTO_EXAMPLE = "{\"PRODUCT_ID\":35455,\"BRAND_ID\":1,\"PRICE_LIST\":1,\"PRICE\":35.5, \"CURR\":\"EUR\",\"START_DATE\":\"2020-06-14T00:00:00\",\"END_DATE\":\"2020-12-31T23:59:59\"}";
 
-    public static final String PRICE_NOT_FOUND_ERROR_DTO = "{\"ERROR_DETAIL\": \"No price list was found for the brand, product or date given.\"}";
+    public static final String PRICE_NOT_FOUND_ERROR_DTO = "No price list was found for the brand, product or date given.";
 }
